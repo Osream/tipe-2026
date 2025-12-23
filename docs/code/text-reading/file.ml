@@ -23,25 +23,39 @@ let word_separator list =
       let new_word = ref "" in
       let acc = ref (aux rest) in
       let n = String.length word in
-      let change = ref false in
-      for i = n-1 downto 0 do
-        let is_spec = is_special_char word.[i] in
-        if not (is_spec && !change) then begin
-          acc := (!new_word)::(!acc);
-          new_word := String.make 1 word.[i];
-          change := is_spec
-        end
-        else if i = 0 then begin
-          new_word := String.make 1 word.[i] ^ !new_word;
-          acc := (!new_word)::(!acc)
-        end
-        else
-          new_word := String.make 1 word.[i] ^ !new_word
-
-      done;
+      if n <> 0 then
+        (let change = ref (is_special_char word.[n-1]) in
+        for i = n-1 downto 0 do
+          let is_spec = is_special_char word.[i] in
+          if not (is_spec = !change) then begin
+            acc := (!new_word)::(!acc);
+            new_word := String.make 1 word.[i];
+            change := is_spec
+          end
+          else
+            new_word := String.make 1 word.[i] ^ !new_word;
+            if i = 0 then
+              acc := (!new_word)::(!acc)
+        done;);
       !acc
     in aux list
       
+let rec detect_double_parentheses lst =
+  match lst with
+  | [] -> []
+  | word::rest -> match String.length word with
+      | 2 ->
+          (match word with
+          | "((" -> "("::"("::(detect_double_parentheses rest)
+          | "))" -> ")"::")"::(detect_double_parentheses rest)
+          | "{{" -> "{"::"{"::(detect_double_parentheses rest)
+          | "}}" -> "}"::"}"::(detect_double_parentheses rest)
+          | "[[" -> "["::"["::(detect_double_parentheses rest)
+          | "]]" -> "]"::"]"::(detect_double_parentheses rest)
+          | _ -> word :: (detect_double_parentheses rest))
+      | _ ->
+          word :: (detect_double_parentheses rest)
+
 
 let file_to_list filename = 
   let l_lst = file_to_line_list filename in
@@ -71,7 +85,7 @@ let file_to_list filename =
           aux (n-1) suite
     in
     let res = aux l_lst in
-    word_separator res
+    detect_double_parentheses (word_separator res)
 
 
 
