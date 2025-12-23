@@ -1,14 +1,6 @@
-cd parser
+cd text-reading/ &&
 
-ocamlc -o parser.cmi parser.mli 
-ocamlc -o parser.cmo parser.ml
-mv parser.cmo ../comp-folder/
-mv parser.cmi ../comp-folder/
-
-cd ..
-
-cd comp-folder
-
-ocamlc -o ../a.out -c parser.cmo recursive-transformer.ml
+ocamlopt -c file.mli &&
+ocamlopt -c file.ml -o ../object-files-dir/file.o &&
 
 cd ..
