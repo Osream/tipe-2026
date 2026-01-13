@@ -4,6 +4,7 @@ type token =
   | STRING of string
   | BOOL of bool
   | CHAR of char
+  | FLOAT of float
   | UNIT
   (* Keywords *)
   | LET | IN | FUN | IF | THEN | ELSE | MATCH | WITH

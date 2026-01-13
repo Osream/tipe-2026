@@ -95,10 +95,28 @@ let token_of_string str =
   | None -> operator_of_string str
   | Some key -> key
 
-let reunite_patterns token_list =
+let token_is_float t1 t2 t3 =
+  match t1, t2, t3 with
+  | INT n, DOT, INT m -> true
+  | _ -> false
+
+let float_of_tokens t1 t2 t3 =
+  match t1, t2 with
+  | INT n, INT m -> 
+    FLOAT (float_of_int n +. (float_of_int m)/.10.**(float_of_int (String.length (string_of_int m))))
+  | _ -> failwith "Impossible"
+
+
+let rec reunite_patterns token_list =
   match token_list with
-  | t1::t2::t3::q -> if 
-  | _ -> token_list
+  | t1::t2::t3::q when token_is_float t1 t2 t3 -> (float_of_tokens t1 t2 t3)::(reunite_patterns q)
+  | (APOST)::q -> reconst_char q ""
+  | (QUOT)::q -> reconst_string q
+  | [] -> []
+  | t::q -> t::(reunite_patterns q)
+and reconst_char token_list str =
+  match token_list with
+  | 
 
 
 
