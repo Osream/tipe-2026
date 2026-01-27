@@ -66,9 +66,7 @@ let () =
     "->", ARROW;
     "=>", DARROW;
     ":", COLON;
-    "::", COLONCOLON;
-    "\'", QUOT;
-    "\"", APOST
+    "::", COLONCOLON
   ]
 
 let literal_of_string str =
@@ -77,7 +75,16 @@ let literal_of_string str =
     | "()" -> UNIT
     | "false" -> BOOL false
     | "true" -> BOOL true
-    | s -> IDENT s)
+    | s -> match s with
+          | "" -> IDENT s
+          | _ -> match s.[0] with
+                | '\'' -> if s.[1] = '\\' then
+                            CHAR s.[2]
+                          else
+                            CHAR s.[1]
+                | '\"' -> STRING (String.sub s 1 (String.length s - 2))
+                | _ -> IDENT s
+          )
   | Some n -> INT n
 
 let delimiter_of_string str =
@@ -101,22 +108,17 @@ let token_is_float t1 t2 t3 =
   | _ -> false
 
 let float_of_tokens t1 t2 t3 =
-  match t1, t2 with
+  match t1, t3 with
   | INT n, INT m -> 
     FLOAT (float_of_int n +. (float_of_int m)/.10.**(float_of_int (String.length (string_of_int m))))
   | _ -> failwith "Impossible"
 
 
-let rec reunite_patterns token_list =
+let rec reunite_float token_list =
   match token_list with
-  | t1::t2::t3::q when token_is_float t1 t2 t3 -> (float_of_tokens t1 t2 t3)::(reunite_patterns q)
-  | (APOST)::q -> reconst_char q ""
-  | (QUOT)::q -> reconst_string q
+  | t1::t2::t3::q when token_is_float t1 t2 t3 -> (float_of_tokens t1 t2 t3)::(reunite_float q)
   | [] -> []
-  | t::q -> t::(reunite_patterns q)
-and reconst_char token_list str =
-  match token_list with
-  | 
+  | t::q -> t::(reunite_float q)
 
 
 
@@ -130,4 +132,4 @@ let tokenize file =
       close_in ic;
       List.rev (EOF::acc)
   in
-  reunite_patterns (aux [])
+  reunite_float (aux [])

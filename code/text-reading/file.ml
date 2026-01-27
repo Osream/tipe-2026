@@ -12,16 +12,51 @@ let file_to_line_list filename =
 
 let is_special_char c =
   match c with
-  | ' ' | '\n' | '\t' | ',' | '.' | ';' | ':' | '!' | '?' | '"' | '\'' | '(' | ')' | '[' | ']' | '{' | '}' | '$' | '%' | '&' | '*' | '+' | '-' | '/' | '<' | '=' | '>' | '@' | '^' | '|' | '~' | '#' -> true
+  | ' ' | '\n' | '\t' | ',' | '.' | ';' | ':' | '!' | '?' | '(' | ')' | '[' | ']' | '{' | '}' | '$' | '%' | '&' | '*' | '+' | '-' | '/' | '<' | '=' | '>' | '@' | '^' | '|' | '~' | '#' -> true
   | _ -> false
 
-let word_separator list =
-  let rec aux list =
-    match list with
-    | [] -> []
-    | word::rest ->
-      let new_word = ref "" in
-      let acc = ref (aux rest) in
+let rec reconst_string list = 
+  match list with
+  | [] -> []
+  | line::rest -> match line with
+    | "" -> reconst_string rest
+    | _ -> (match line.[0] with
+      | '\"' -> (let while_condition = ref line 
+                and n = ref (String.length line)
+                and list_ref = ref rest in
+                while (!while_condition).[!n -1] <> '\"' || (!while_condition).[!n -2] = '\\' do
+                  print_int (!n);
+                  print_string (!while_condition^"\n");
+                  if (!while_condition).[!n -2] = '\"' && (!while_condition).[!n -3] <> '\\' then begin
+                    list_ref := (String.make 1 (!while_condition).[!n -1])::(!list_ref);
+                    while_condition := String.sub (!while_condition) 0 (!n - 1)
+                  end
+                  else
+                    match !list_ref with
+                    | word::tail -> n:= !n + String.length word + 1; 
+                                    while_condition := !while_condition ^ " " ^ word ; 
+                                    list_ref := tail
+                    | [] -> failwith ""
+                done;
+                (!while_condition)::(reconst_string !list_ref)
+                )
+      | '\'' -> (let n = ref 1 in
+                while line.[!n] <> '\'' || line.[!n] <> '\\' do
+                  incr n
+                done;
+                (String.sub line 0 (!n + 1)) :: (String.sub line (!n) (String.length line - !n -1)) :: reconst_string rest
+      )
+      | _ -> line :: (reconst_string rest))
+
+
+
+let rec word_separator list =
+  match list with
+  | [] -> []
+  | word::rest ->
+    let new_word = ref "" in
+    let acc = ref (word_separator rest) in
+    if word.[0] <> '\"' && word.[0] <> '\'' then begin
       let n = String.length word in
       if n <> 0 then
         (let change = ref (is_special_char word.[n-1]) in
@@ -36,10 +71,13 @@ let word_separator list =
             new_word := String.make 1 word.[i] ^ !new_word;
             if i = 0 then
               acc := (!new_word)::(!acc)
-        done;);
+        done;
+      );
       !acc
-    in aux list
-      
+    end
+    else
+      word::(word_separator rest)
+
 let rec detect_double_parentheses lst =
   match lst with
   | [] -> []
@@ -60,11 +98,11 @@ let rec detect_double_parentheses lst =
 let file_to_list filename = 
   let l_lst = file_to_line_list filename in
   
-  let rec aux lst = 
+  let rec line_to_words lst = 
     match lst with
     | [] -> []
     | line :: rest ->
-        let suite = aux rest in
+        let suite = line_to_words rest in
         let word = ref "" 
         and n = String.length line in
 
@@ -84,8 +122,8 @@ let file_to_list filename =
           in
           aux (n-1) suite
     in
-    let res = aux l_lst in
-    detect_double_parentheses (word_separator res)
+    let res = line_to_words l_lst in
+    detect_double_parentheses(word_separator (reconst_string res))
 
 
 

@@ -9,7 +9,7 @@ let tests_creer () =
 let tests_est_vide () =
     let f = creer () in
     assert (est_vide f) ;
-    enfiler 4 f ;
+    enfiler 4.1 f ;
     assert(not (est_vide f))
 
 

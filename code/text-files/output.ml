@@ -33,6 +33,8 @@ f
 ;
 enfiler
 4
+.
+1
 f
 ;
 assert
@@ -96,16 +98,7 @@ defiler
 f
 in
 failwith
-"
-pas
-d
-'
-assertions
-dans
-la
-fonction
-defiler
-"
+"pas d'assertions dans la fonction defiler"
 with
 |
 Assert_failure
