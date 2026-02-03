@@ -9,11 +9,13 @@ let file_to_line_list filename =
       List.rev acc
   in
   aux []
+;;
 
 let is_special_char c =
   match c with
   | ' ' | '\n' | '\t' | ',' | '.' | ';' | ':' | '!' | '?' | '(' | ')' | '[' | ']' | '{' | '}' | '$' | '%' | '&' | '*' | '+' | '-' | '/' | '<' | '=' | '>' | '@' | '^' | '|' | '~' | '#' -> true
   | _ -> false
+;;
 
 let rec reconst_string list = 
   match list with
@@ -25,8 +27,6 @@ let rec reconst_string list =
                 and n = ref (String.length line)
                 and list_ref = ref rest in
                 while (!while_condition).[!n -1] <> '\"' || (!while_condition).[!n -2] = '\\' do
-                  print_int (!n);
-                  print_string (!while_condition^"\n");
                   if (!while_condition).[!n -2] = '\"' && (!while_condition).[!n -3] <> '\\' then begin
                     list_ref := (String.make 1 (!while_condition).[!n -1])::(!list_ref);
                     while_condition := String.sub (!while_condition) 0 (!n - 1)
@@ -47,7 +47,7 @@ let rec reconst_string list =
                 (String.sub line 0 (!n + 1)) :: (String.sub line (!n) (String.length line - !n -1)) :: reconst_string rest
       )
       | _ -> line :: (reconst_string rest))
-
+;;
 
 
 let rec word_separator list =
@@ -77,6 +77,7 @@ let rec word_separator list =
     end
     else
       word::(word_separator rest)
+;;
 
 let rec detect_double_parentheses lst =
   match lst with
@@ -90,9 +91,22 @@ let rec detect_double_parentheses lst =
           | "}}" -> "}"::"}"::(detect_double_parentheses rest)
           | "[[" -> "["::"["::(detect_double_parentheses rest)
           | "]]" -> "]"::"]"::(detect_double_parentheses rest)
-          | _ -> word :: (detect_double_parentheses rest))
+          | _ -> word :: (detect_double_parentheses rest)
+          )
       | _ ->
           word :: (detect_double_parentheses rest)
+;;
+      
+let rec detect_semicolon lst =
+  match lst with
+  | [] -> []
+  | word::rest -> ( let new_word = ref "" in
+  if word <> "" then begin
+    while
+  end;
+    (!new_word)::detect_semicolon rest
+  )
+;;
 
 
 let file_to_list filename = 
@@ -123,7 +137,8 @@ let file_to_list filename =
           aux (n-1) suite
     in
     let res = line_to_words l_lst in
-    detect_double_parentheses(word_separator (reconst_string res))
+    detect_double_parentheses (detect_semicolon (word_separator (reconst_string res)))
+;;
 
 
 
@@ -138,3 +153,4 @@ let list_to_file lst filename =
   in
   aux lst;
   close_out oc
+;;

@@ -1,4 +1,3 @@
-open Token
 
 let keywords = Hashtbl.create 50
 let () =
@@ -62,6 +61,7 @@ let () =
     ",", COMMA;
     ".", DOT;
     ";", SEMICOLON;
+    ";;", SEMICOLONCOLON;
     "|", PIPE;
     "->", ARROW;
     "=>", DARROW;
@@ -122,14 +122,10 @@ let rec reunite_float token_list =
 
 
 
-let tokenize file =
-  let ic = open_in file in
-  let rec aux acc =
-    try
-      let line = input_line ic in
-      aux ((token_of_string line) :: acc)
-    with End_of_file ->
-      close_in ic;
-      List.rev (EOF::acc)
+let tokenize str_list =
+  let rec tokenize_aux lst =
+    match lst with
+      | [] -> []
+      | str::tail -> (token_of_string str)::(tokenize_aux tail)
   in
-  reunite_float (aux [])
+  reunite_float (tokenize_aux str_list)
