@@ -1,0 +1,3 @@
+(library
+ (name tipe)
+ (libraries sari))

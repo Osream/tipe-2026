@@ -1,0 +1,38 @@
+# dune build
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /home/Enzo/.cache/dune/db
+# Workspace root: /home/Enzo/Workspace/cours/prepa/tipe-2026/code
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /home/Enzo/.opam/default/bin/ocamlc.opt -config > /tmp/dune_b64c55_output
+# Promoting "_build/default/tipe.opam" to "tipe.opam"
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -w -53 -w -49 -nopervasives -nostdlib -g -bin-annot -bin-annot-occurrences -I lib/.tipe.objs/byte -no-alias-deps -opaque -o lib/.tipe.objs/byte/tipe.cmo -c -impl lib/tipe.ml-gen)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamldep.opt -modules -impl lib/token.ml) > _build/default/lib/.tipe.objs/tipe__Token.impl.d
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamldep.opt -modules -intf lib/grammar.mli) > _build/default/lib/.tipe.objs/tipe__Grammar.intf.d
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamldep.opt -modules -impl lib/grammar.ml) > _build/default/lib/.tipe.objs/tipe__Grammar.impl.d
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamldep.opt -modules -intf lib/token.mli) > _build/default/lib/.tipe.objs/tipe__Token.intf.d
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -w -53 -w -49 -nopervasives -nostdlib -g -I lib/.tipe.objs/byte -I lib/.tipe.objs/native -cmi-file lib/.tipe.objs/byte/tipe.cmi -no-alias-deps -opaque -o lib/.tipe.objs/native/tipe.cmx -c -impl lib/tipe.ml-gen)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -bin-annot -bin-annot-occurrences -I lib/.tipe.objs/byte -no-alias-deps -opaque -open Tipe -o lib/.tipe.objs/byte/tipe__Grammar.cmi -c -intf lib/grammar.mli)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -bin-annot -bin-annot-occurrences -I lib/.tipe.objs/byte -no-alias-deps -opaque -open Tipe -o lib/.tipe.objs/byte/tipe__Token.cmi -c -intf lib/token.mli)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -bin-annot -bin-annot-occurrences -I lib/.tipe.objs/byte -cmi-file lib/.tipe.objs/byte/tipe__Grammar.cmi -no-alias-deps -opaque -open Tipe -o lib/.tipe.objs/byte/tipe__Grammar.cmo -c -impl lib/grammar.ml)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -bin-annot -bin-annot-occurrences -I test/.test_tipe.eobjs/byte -I lib/.tipe.objs/byte -no-alias-deps -opaque -o test/.test_tipe.eobjs/byte/dune__exe__Test_tipe.cmi -c -intf test/test_tipe.mli)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -bin-annot -bin-annot-occurrences -I bin/.main.eobjs/byte -I lib/.tipe.objs/byte -no-alias-deps -opaque -o bin/.main.eobjs/byte/dune__exe__Main.cmi -c -intf bin/main.mli)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -I lib/.tipe.objs/byte -I lib/.tipe.objs/native -cmi-file lib/.tipe.objs/byte/tipe__Grammar.cmi -no-alias-deps -opaque -open Tipe -o lib/.tipe.objs/native/tipe__Grammar.cmx -c -impl lib/grammar.ml)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -bin-annot -bin-annot-occurrences -I lib/.tipe.objs/byte -cmi-file lib/.tipe.objs/byte/tipe__Token.cmi -no-alias-deps -opaque -open Tipe -o lib/.tipe.objs/byte/tipe__Token.cmo -c -impl lib/token.ml)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -I lib/.tipe.objs/byte -I lib/.tipe.objs/native -cmi-file lib/.tipe.objs/byte/tipe__Token.cmi -no-alias-deps -opaque -open Tipe -o lib/.tipe.objs/native/tipe__Token.cmx -c -impl lib/token.ml)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -a -o lib/tipe.cma lib/.tipe.objs/byte/tipe.cmo lib/.tipe.objs/byte/tipe__Token.cmo lib/.tipe.objs/byte/tipe__Grammar.cmo)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -I test/.test_tipe.eobjs/byte -I test/.test_tipe.eobjs/native -I lib/.tipe.objs/byte -I lib/.tipe.objs/native -cmi-file test/.test_tipe.eobjs/byte/dune__exe__Test_tipe.cmi -no-alias-deps -opaque -o test/.test_tipe.eobjs/native/dune__exe__Test_tipe.cmx -c -impl test/test_tipe.ml)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.tipe.objs/byte -I lib/.tipe.objs/native -cmi-file bin/.main.eobjs/byte/dune__exe__Main.cmi -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -a -o lib/tipe.cmxa lib/.tipe.objs/native/tipe.cmx lib/.tipe.objs/native/tipe__Token.cmx lib/.tipe.objs/native/tipe__Grammar.cmx)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -shared -linkall -I lib -o lib/tipe.cmxs lib/tipe.cmxa)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -o bin/main.exe lib/tipe.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /home/Enzo/.opam/default/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -o test/test_tipe.exe lib/tipe.cmxa test/.test_tipe.eobjs/native/dune__exe__Test_tipe.cmx)

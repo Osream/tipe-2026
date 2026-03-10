@@ -1,0 +1,26 @@
+(lang dune 3.21)
+
+(name tipe)
+
+(generate_opam_files true)
+
+(source
+ (github osream/tipe-2026))
+
+(authors "Enzo Liagre <enzo.liagre@gmail.com>")
+
+(maintainers "Enzo Liagre <enzo.liagre@gmail.com>")
+
+(license GNU GPLv3.0)
+
+(documentation ../docs/tipe_doc)
+
+(package
+ (name sari)
+ (synopsis "A parser from iterative to recursive")
+ (description "A longer description")
+ (depends ocaml)
+ (tags
+  ("Compiler" "to describe" your project)))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
