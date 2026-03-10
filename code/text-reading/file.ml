@@ -96,15 +96,22 @@ let rec detect_double_parentheses lst =
       | _ ->
           word :: (detect_double_parentheses rest)
 ;;
-      
+     
 let rec detect_semicolon lst =
   match lst with
   | [] -> []
-  | word::rest -> ( let new_word = ref "" in
-  if word <> "" then begin
-    while
-  end;
-    (!new_word)::detect_semicolon rest
+  | word::rest -> (
+    (*
+    Au vu de comment on décompose avant d'arriver ici
+    on peut se passer de regarder tout le mot et regarder si
+    - le mot est seulement composé de caractères spéciaux
+    - présence de ;; à la fin
+    *)
+    let n = String.length word in
+    if is_special_char word.[0] && word.[n-2] = ';' && word.[n-1] = ';' then
+      String.sub word 0 (n-2) :: ";;" :: detect_semicolon rest
+    else
+      word :: detect_semicolon rest
   )
 ;;
 

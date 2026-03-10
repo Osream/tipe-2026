@@ -1,4 +1,4 @@
-
+open Token
 let keywords = Hashtbl.create 50
 let () =
   List.iter (fun (k, v) -> Hashtbl.add keywords k v) [
