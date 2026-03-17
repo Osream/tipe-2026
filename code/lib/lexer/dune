@@ -1,3 +1,4 @@
 (library
- (name tipe)
- (libraries sari))
+ (name lexer)
+ (libraries token))
+

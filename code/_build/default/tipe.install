@@ -1,8 +1,0 @@
-lib: [
-  "_build/install/default/lib/tipe/META"
-  "_build/install/default/lib/tipe/dune-package"
-  "_build/install/default/lib/tipe/opam"
-]
-bin: [
-  "_build/install/default/bin/tipe"
-]

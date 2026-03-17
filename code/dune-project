@@ -1,6 +1,6 @@
 (lang dune 3.21)
 
-(name tipe)
+(name sari)
 
 (generate_opam_files true)
 

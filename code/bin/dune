@@ -1,4 +1,4 @@
 (executable
  (public_name sari)
  (name main)
- (libraries sari))
+ (libraries file_to_list grammar token lexer parser))
